@@ -31,6 +31,6 @@
   <a href="https://www.linkedin.com/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
    <a href="https://www.linkedin.com/" target="_blank"><img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" target="_blank"></a> 
  
-  ![Snake animation](https://github.com/rafaballerini/Harlei-Melo/blob/output/github-contribution-grid-snake.svg)
+  ![Snake animation](https://github.com/Harlei-Melo/blob/output/github-contribution-grid-snake.svg)
  
 <div/>
