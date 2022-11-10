@@ -19,8 +19,7 @@
   <img align="left" alt="Rafa-Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">
   <img align="left" alt="Rafa-Ts" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-plain.svg">
   <img align="left" alt="Rafa-React" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
-  
- 
+  <img align="right" alt="Rafa-pic" height="150" style="border-radius:100px;"src="https://media.discordapp.net/attachments/897580918821244961/1040298101623238686/Icon-Git.png?width=676&height=676">
 </div>
   
 ##  <br>
