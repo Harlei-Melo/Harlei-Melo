@@ -48,7 +48,7 @@ Me chamo **Harlei Melo**, um Front-end, tentando transformar pixels em pura magi
 ### 🌐 Conecte-se Comigo:
 
 <p align="left">
-  <a href="linkedin.com/in/harlei-melo/" title="LinkedIn">
+  <a href="https://www.linkedin.com/in/harlei-melo/" title="LinkedIn">
   <img src="https://img.shields.io/badge/-Linkedin-0e76a8?style=flat-square&logo=Linkedin&logoColor=white&link=/" alt="LinkedIn"/></a>
 
  Sinta-se à vontade para entrar em contato! ✨
