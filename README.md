@@ -1,32 +1,54 @@
-## Oii, muito prazer, Eu sou o Harlei Melo 😄
 
- 🔭 I’m currently working on Front-End
- <br>
- 🌱 I’m currently learning UI/UX Desing
-<br><br>
 
-<div align="left">
-  <a href="https://github.com/Harlei-Melo">
-  <img  width="50%"  height="141em" src="https://github-readme-stats.vercel.app/api?username=Harlei-Melo&show_icons=true&theme=transparent&include_all_commits=true&count_private=true"/> 
-  <img width="38%"  height="160em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Harlei-Melo&layout=compact&langs_count=7&theme=transparent"/>
-</div>
- 
-<div style="display: inline_block"><br><br>
- 
- <img align="left" alt="Rafa-Python" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" />
-  <img align="left" alt="Rafa-HTML" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg">
-  <img align="left" alt="Rafa-CSS" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg">
-  <img align="left" alt="Rafa-Js" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-plain.svg">
-  <img align="left" alt="Rafa-Ts" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-plain.svg">
-  <img align="left" alt="Rafa-React" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg">
-</div>
-  
-##  <br>
+## Hello, Techies! 
 
-<div>
- <a href="" target="_blank"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" target="_blank"></a> 
-  <a href = "harleimelo0@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
-  <a href="https://www.linkedin.com/in/harlei-melo/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
-   <a href="" target="_blank"><img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" target="_blank"></a> 
- 
-<div/>
+<img src="https://user-images.githubusercontent.com/74038190/212750996-938b257b-266c-45a7-9af7-655341c0f58b.gif" min-height="300px" max-height="300px" height="300px" min-width="300px" max-width="300px" width="300px" align="right">
+<br>
+
+Me chamo **Harlei Melo**, um Front-end, tentando transformar pixels em pura magia na web.
+
+</br>
+
+### 👩🏾‍💻 No Mundo do Desenvolvimento
+
+- Desenvolvedor Front-end focado em React e Sass. Também me aventurando em GSAP e Next.js. 🌐
+- Designer UX/UI,🎨
+- Cursando **Análise e Desenvolvimento de Sistemas** no **SENAC**. 🎓
+    
+</br>
+
+### 🚀  Habilidades
+
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=html,css,js,react,ts,sass" />
+  </a>
+</p>
+
+</br>
+
+### 🧰  Ferramentas
+
+<p align="left">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=vscode,figma,git,netlify" />
+  </a>
+</p>
+
+</br>
+
+### 📊 Estatísticas
+
+<a href="https://github.com/Harlei-Melo" title="ilustração do mapeamento de linguagens">
+  <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Harlei-Melo&theme=dracula&hide_langs_below=1" alt="ilustração da leitura de linguagens de programação no perfil"/>
+</a>
+
+</br>
+
+### 🌐 Conecte-se Comigo:
+
+<p align="left">
+  <a href="linkedin.com/in/harlei-melo/" title="LinkedIn">
+  <img src="https://img.shields.io/badge/-Linkedin-0e76a8?style=flat-square&logo=Linkedin&logoColor=white&link=/" alt="LinkedIn"/></a>
+
+ Sinta-se à vontade para entrar em contato! ✨
