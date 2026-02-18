@@ -1,4 +1,3 @@
-/* Reset Básico */
 body, html, #root {
   margin: 0;
   padding: 0;
@@ -6,118 +5,10 @@ body, html, #root {
   height: 100%;
   overflow: hidden;
   background-color: #000;
-  font-family: 'Courier New', Courier, monospace; /* Fonte Mono é essencial */
 }
 
-/* Layers */
-.terminal-interface {
-  position: relative;
+.canvas-container {
   width: 100vw;
   height: 100vh;
-}
-
-.canvas-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.hud-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10; /* Fica por cima do 3D */
-  pointer-events: none; /* Deixa clicar no 3D se precisar */
-  box-sizing: border-box;
-  padding: 20px;
-}
-
-/* Paineis do HUD */
-.hud-panel {
-  position: absolute;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-}
-
-.label {
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: #555;
-  margin-bottom: 5px;
-}
-
-.value {
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.status-active {
-  color: #0f0;
-  text-shadow: 0 0 5px #0f0;
-}
-
-/* Posições */
-.top-left {
-  top: 30px;
-  left: 30px;
-  border-left: 2px solid #333;
-  padding-left: 10px;
-}
-
-.top-right {
-  top: 30px;
-  right: 30px;
-  text-align: right;
-  border-right: 2px solid #333;
-  padding-right: 10px;
-}
-
-.bottom-center {
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  background: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente para leitura */
-  padding: 15px 40px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(2px);
-}
-
-/* Tipografia Tech */
-.tech-name {
-  margin: 0;
-  font-size: 42px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  transition: color 0.5s ease; /* Transição suave de cor no texto */
-}
-
-.tech-meta {
-  font-size: 10px;
-  color: #666;
-  margin-top: 5px;
-}
-
-.bar-graph .bar {
-  height: 4px;
-  background: #333;
-  margin-top: 3px;
-  float: right;
-  clear: right;
-}
-
-/* Efeito Vignette (Escurecer bordas) */
-.vignette {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, transparent 60%, black 100%);
-  z-index: 9;
+  background: #000;
 }

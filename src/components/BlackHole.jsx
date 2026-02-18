@@ -1,29 +1,27 @@
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-// SUAS TECNOLOGIAS E CORES
+// Cores das Tecnologias
 const TECH_STACK = [
-  { name: "FLUTTER", color: "#02569B" }, // Azul Flutter
-  { name: "JAVASCRIPT", color: "#F7DF1E" }, // Amarelo JS
-  { name: "PYTHON", color: "#3776AB" }, // Azul/Verde Python
-  { name: "REACT", color: "#61DAFB" }, // Ciano React
-  { name: "GLSL", color: "#5586a4" }, // Cinza/Azul GLSL
+  { name: "FLUTTER", color: "#02569B" }, // Azul Escuro
+  { name: "JAVASCRIPT", color: "#F7DF1E" }, // Amarelo
+  { name: "PYTHON", color: "#3776AB" }, // Azul/Verde
+  { name: "REACT", color: "#61DAFB" }, // Ciano
+  { name: "GLSL", color: "#ff5500" }, // Laranja (Acentua o GLSL)
 ];
 
-const BlackHole = ({ onTechChange, speed = 1.0 }) => {
+const BlackHole = ({ speed = 1.0 }) => {
   const meshRef = useRef();
   const { viewport } = useThree();
 
-  // --- AQUI ESTÁ A PROTEÇÃO DE VELOCIDADE ---
-  // Math.min(speed, 2.0) garante que nunca passe de 2x a velocidade normal
-  // Mesmo que venha 100 do GitHub, ele usa 2.0
+  // AUMENTADO: 5 segundos por cor para uma transição "respiração" lenta
+  const CYCLE_DURATION = 5.0;
+
+  // Limitador de velocidade suave (Max 2.0x, Min 0.2x)
   const safeSpeed = useMemo(() => {
     return Math.max(0.2, Math.min(speed, 2.0));
   }, [speed]);
-
-  // Duração de cada ciclo de cor (em segundos)
-  const CYCLE_DURATION = 3.0;
 
   const uniforms = useMemo(
     () => ({
@@ -44,6 +42,7 @@ const BlackHole = ({ onTechChange, speed = 1.0 }) => {
     }
   `;
 
+  // SEU FRAGMENT SHADER ORIGINAL (Mantido intacto)
   const fragmentShader = `
     varying vec2 vUv;
     uniform float uTime;
@@ -73,14 +72,11 @@ const BlackHole = ({ onTechChange, speed = 1.0 }) => {
 
   useFrame((state) => {
     if (meshRef.current) {
-      // Usa a safeSpeed em vez da speed bruta
+      // Atualiza rotação física (uTime)
       const time = state.clock.elapsedTime * safeSpeed;
-
       meshRef.current.material.uniforms.uTime.value = time;
 
-      // Lógica de Ciclo de Cores
-      // Usamos o tempo real (sem multiplicar por speed) para o ciclo de cores ficar constante
-      // independente da velocidade de rotação do buraco negro
+      // Atualiza Ciclo de Cores (Independente da velocidade de rotação)
       const colorTime = state.clock.elapsedTime;
 
       const totalIndex = Math.floor(colorTime / CYCLE_DURATION);
@@ -91,13 +87,10 @@ const BlackHole = ({ onTechChange, speed = 1.0 }) => {
       const currentColor = new THREE.Color(TECH_STACK[currentIndex].color);
       const nextColor = new THREE.Color(TECH_STACK[nextIndex].color);
 
+      // Lerp suave entre as cores
       meshRef.current.material.uniforms.uColor.value
         .copy(currentColor)
         .lerp(nextColor, mixFactor);
-
-      if (onTechChange) {
-        onTechChange(TECH_STACK[currentIndex]);
-      }
     }
   });
 
