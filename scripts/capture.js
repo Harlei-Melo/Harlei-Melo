@@ -4,15 +4,21 @@ import { PNG } from "pngjs";
 import fs from "fs";
 import path from "path";
 
+// --- CONFIGURAÇÕES DO CICLO COMPLETO ---
 const WIDTH = 800;
 const HEIGHT = 450;
-const FRAMES = 60;
-const DURATION = 2;
+
+// Ajustado para capturar todas as cores (5 techs * 3s = 15s)
+const DURATION = 15;
+// 15s * 20fps = 300 frames (Qualidade fluida, tamanho aceitável)
+const FRAMES = 300;
+
 const OUTPUT_FILE = "github-profile.gif";
+// Mantivemos o IP direto para garantir conexão no GitHub Actions
 const URL = "http://127.0.0.1:5173";
 
 async function capture() {
-  console.log("🚀 Iniciando Protocolo de Captura...");
+  console.log("🚀 Iniciando Protocolo de Captura (Full Cycle)...");
 
   const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -23,11 +29,11 @@ async function capture() {
 
   console.log(`🔗 Conectando a ${URL}...`);
   try {
-    // Aumentei o timeout para 60s e mudei para domcontentloaded (mais leve que networkidle0)
+    // Timeout robusto para garantir que o servidor (http-server) responda
     await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 });
   } catch (e) {
     console.error("❌ ERRO FATAL AO CONECTAR:");
-    console.error(e); // <--- AGORA VAMOS VER O MOTIVO REAL
+    console.error(e);
     await browser.close();
     process.exit(1);
   }
@@ -37,20 +43,25 @@ async function capture() {
 
   encoder.pipe(fileStream);
   encoder.writeHeader();
-  encoder.setRepeat(0);
-  encoder.setDelay((DURATION / FRAMES) * 1000);
-  encoder.setQuality(10);
+  encoder.setRepeat(0); // Loop infinito
+  encoder.setDelay((DURATION / FRAMES) * 1000); // Delay calculado automaticamente
+  encoder.setQuality(10); // 10 é um bom equilíbrio entre tamanho e qualidade
 
+  // Prepara a página para gravação (fundo preto, sem scroll)
   await page.evaluate(() => {
     document.body.style.overflow = "hidden";
     document.body.style.background = "#000";
-    window.isCapturing = true;
+    window.isCapturing = true; // Trava o loop de renderização do React
   });
 
   console.log("🎥 Gravando frames...");
 
   for (let i = 0; i < FRAMES; i++) {
-    const time = (i / FRAMES) * (Math.PI * 2);
+    // Mapeia o progresso do frame (0 a 1) para o ciclo total de tempo (0 a 15s)
+    // Nota: Multiplicamos por DURATION aqui se o seu shader usa segundos reais,
+    // ou mantemos a lógica de fase se o shader espera uTime.
+    // Como seu shader usa 'uTime' em segundos, vamos passar o tempo real:
+    const time = (i / FRAMES) * DURATION;
 
     await page.evaluate((t) => {
       if (window.seekAnimation) window.seekAnimation(t);

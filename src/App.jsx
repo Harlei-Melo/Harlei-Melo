@@ -1,26 +1,62 @@
-// ARQUIVO: src/App.jsx
-import { useMemo } from "react";
-import Scene from "./components/Scene"; // Importa a cena corretamente
-import "./index.css";
+import React, { useState } from "react";
+import Scene from "./components/Scene";
+import "./App.css"; // Vamos adicionar o CSS aqui
 
 function App() {
-  // Ler parâmetros da URL para saber cor e velocidade
-  const params = useMemo(() => {
-    const searchParams = new URLSearchParams(window.location.search);
+  const [activeTech, setActiveTech] = useState({
+    name: "INITIALIZING...",
+    color: "#ffffff",
+  });
 
-    return {
-      // Se tiver cor na URL usa, se não usa laranja (#ffaa00)
-      color: searchParams.get("color")
-        ? "#" + searchParams.get("color")
-        : "#ffaa00",
+  return (
+    <div className="terminal-interface">
+      {/* CENA 3D (Fundo) */}
+      <div className="canvas-layer">
+        {/* Passamos a função para receber a tecnologia atual do shader */}
+        <Scene onTechChange={setActiveTech} />
+      </div>
 
-      // Se tiver activity na URL usa, se não usa 1.0
-      activity: parseFloat(searchParams.get("activity")) || 1.0,
-    };
-  }, []);
+      {/* HUD (Interface Frontal) */}
+      <div className="hud-layer">
+        {/* Canto Superior Esquerdo - Status */}
+        <div className="hud-panel top-left">
+          <div className="label">SYSTEM STATUS</div>
+          <div className="value status-active">ONLINE</div>
+          <div className="coords">COORD: 45.92.11</div>
+        </div>
 
-  // Passa os dados lidos para a Cena 3D
-  return <Scene color={params.color} speed={params.activity} />;
+        {/* Canto Superior Direito - Git Stats Simulados */}
+        <div className="hud-panel top-right">
+          <div className="label">COMM LINK</div>
+          <div className="value">GITHUB_API: CONNECTED</div>
+          <div className="bar-graph">
+            <div className="bar" style={{ width: "80%" }}></div>
+            <div className="bar" style={{ width: "60%" }}></div>
+            <div className="bar" style={{ width: "90%" }}></div>
+          </div>
+        </div>
+
+        {/* Centro Inferior - O NOME DA TECNOLOGIA (O destaque) */}
+        <div className="hud-panel bottom-center">
+          <div className="scan-line"></div>
+          <div className="label">DETECTED SIGNATURE</div>
+          <h1
+            className="tech-name"
+            style={{
+              color: activeTech.color,
+              textShadow: `0 0 20px ${activeTech.color}`,
+            }}
+          >
+            {activeTech.name}
+          </h1>
+          <div className="tech-meta">core_module::loaded</div>
+        </div>
+
+        {/* Efeitos de Borda (Vignette e Scanlines) */}
+        <div className="vignette"></div>
+      </div>
+    </div>
+  );
 }
 
 export default App;
