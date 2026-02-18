@@ -16,21 +16,25 @@ jobs:
           committer_branch: metrics
           committer_message: "chore: update metrics [skip ci]"
 
-          # --- CONFIGURAÇÃO MINIMALISTA ---
+          # --- CONFIGURAÇÃO VISUAL ---
           user: Harlei-Melo
           template: classic
-          base: "" # Remove TUDO (foto, repositórios, etc) para focar no gráfico
+          base: "" # REMOVE TUDO (Header, Activity, etc)
           config_display: large
+          config_timezone: America/Sao_Paulo
 
-          # --- RAINBOW GRADIENT (Cores Reais) ---
-          # A primeira cor (#161b22) é o fundo do GitHub Dark para dias vazios.
-          # As seguintes formam o arco-íris completo.
-          config_colors: gradient(#161b22, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)
+          # --- O "PULO DO GATO" PARA O RAINBOW ---
+          # Removi o 'theme' e o 'gradient()'.
+          # Passamos apenas a fila de cores separadas por vírgula.
+          # A primeira cor (#161b22) é o "vazio" (fundo dark).
+          # As próximas são a intensidade do arco-íris.
+          config_colors: "#161b22, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3"
 
-          # --- GRÁFICO 3D (O Coração do Design) ---
+          # --- PLUGINS ---
+          # Gráfico 3D (Isocalendar)
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
 
-          # --- STREAK (Sequência Máxima) ---
+          # Streak (Sequência Máxima)
           plugin_streat: yes
           plugin_streat_sections: timeline
