@@ -1,5 +1,3 @@
-### Olá, eu sou o Harlei 👋
-
 <div align="center">
-  <img src="./github-profile.gif" width="100%" alt="Galaxy Animation" />
+  <img src="./github-profile.svg" width="100%" alt="Black Hole Animation" />
 </div>
