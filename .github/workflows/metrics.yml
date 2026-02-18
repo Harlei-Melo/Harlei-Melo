@@ -1,0 +1,52 @@
+name: Metrics
+on:
+  # Roda a cada 24 horas
+  schedule: [{ cron: "0 0 * * *" }]
+  # Permite rodar manualmente
+  workflow_dispatch:
+  # Roda a cada push na main (opcional)
+  push: { branches: ["main"] }
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          # Seu token (padrão do github actions)
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+          # Opções Gerais
+          user: Harlei-Melo
+          template: classic
+          base: header, activity, community, repositories, metadata
+          config_timezone: America/Sao_Paulo
+
+          # TEMA "NIGHT" (Combina com o Buraco Negro)
+          config_display: large
+          config_padding: 0, 10%
+          theme: night
+
+          # 1. CALENDÁRIO ISOMÉTRICO (A "Cidade 3D")
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+
+          # 2. GRÁFICO DE LINGUAGENS (Visual e limpo)
+          plugin_languages: yes
+          plugin_languages_analysis_timeout: 15
+          plugin_languages_categories: markup, programming
+          plugin_languages_colors: github
+          plugin_languages_limit: 8
+          plugin_languages_recent_categories: markup, programming
+          plugin_languages_recent_days: 14
+          plugin_languages_recent_load: 300
+          plugin_languages_sections: most-used
+          plugin_languages_threshold: 0%
+
+          # 3. ACHIEVEMENTS (Medalhas 3D bonitas)
+          plugin_achievements: yes
+          plugin_achievements_display: compact
+          plugin_achievements_secrets: yes
+          plugin_achievements_threshold: C
