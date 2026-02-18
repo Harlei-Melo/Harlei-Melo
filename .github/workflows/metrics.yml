@@ -16,25 +16,35 @@ jobs:
           committer_branch: metrics
           committer_message: "chore: update metrics [skip ci]"
 
-          # --- CONFIGURAÇÃO VISUAL ---
+          # --- CONFIGURAÇÃO VALIDADA ---
           user: Harlei-Melo
           template: classic
-          base: "" # REMOVE TUDO (Header, Activity, etc)
+          base: "" # Limpa toda a "sujeira" (headers, metadados, etc)
           config_display: large
           config_timezone: America/Sao_Paulo
 
-          # --- O "PULO DO GATO" PARA O RAINBOW ---
-          # Removi o 'theme' e o 'gradient()'.
-          # Passamos apenas a fila de cores separadas por vírgula.
-          # A primeira cor (#161b22) é o "vazio" (fundo dark).
-          # As próximas são a intensidade do arco-íris.
-          config_colors: "#161b22, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3"
+          # --- ATIVAÇÃO DE RECURSOS VIA QUERY ---
+          # Já que o seu Action não aceita 'plugin_...' como input direto,
+          # passamos as instruções dentro do 'query', que é um campo válido.
+          query: '{"isocalendar": true, "isocalendar.duration": "full-year", "streak": true}'
 
-          # --- PLUGINS ---
-          # Gráfico 3D (Isocalendar)
-          plugin_isocalendar: yes
-          plugin_isocalendar_duration: full-year
+          # --- ESTILIZAÇÃO RAINBOW VIA CSS ---
+          # Esta é a forma mais poderosa de personalizar: injetamos o CSS direto no SVG.
+          # Resolve o problema das cores e do tema sem precisar de inputs inexistentes.
+          extras_css: |
+            /* Fundo Escuro Profundo */
+            svg { background: #050505 !important; border-radius: 14px; }
 
-          # Streak (Sequência Máxima)
-          plugin_streat: yes
-          plugin_streat_sections: timeline
+            /* Efeito Rainbow no Gráfico 3D (Isocalendar) */
+            /* L0: Vazio | L1: Azul | L2: Verde | L3: Amarelo | L4: Rosa/Vermelho */
+            .isocalendar .day-L0 { fill: #161b22 !important; }
+            .isocalendar .day-L1 { fill: #0077ff !important; }
+            .isocalendar .day-L2 { fill: #00ff88 !important; }
+            .isocalendar .day-L3 { fill: #ffcc00 !important; }
+            .isocalendar .day-L4 { fill: #ff0055 !important; }
+
+            /* Estilização da Streak (Sequência) */
+            .streak { fill: #ffffff !important; font-family: monospace; }
+
+            /* Remove textos genéricos que sobram */
+            .header, .footer, h2 { display: none !important; }
