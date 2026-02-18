@@ -1,10 +1,7 @@
 name: Metrics
 on:
-  # 1. Roda automaticamente todo dia à meia-noite
   schedule: [{ cron: "0 0 * * *" }]
-  # 2. Permite rodar manualmente na aba Actions
   workflow_dispatch:
-  # 3. Roda a cada push na main
   push: { branches: ["main"] }
 
 jobs:
@@ -16,45 +13,27 @@ jobs:
       - uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
-          # --- ONDE SALVAR ---
           committer_branch: metrics
           committer_message: "chore: update metrics [skip ci]"
 
-          # --- CONFIGURAÇÕES GERAIS ---
+          # --- CONFIGURAÇÕES DE FOCO ---
           user: Harlei-Melo
           template: classic
-          base: header, activity, community, repositories, metadata
+          base: "" # Mantém o fundo limpo sem header/footer
           config_timezone: America/Sao_Paulo
-
-          # --- AQUI ESTAVA O ERRO (Theme e Display) ---
-          # Na versão atual, eles funcionam assim:
           config_display: large
-          config_padding: 0, 10%
 
-          # Para garantir o tema escuro/neon, usamos css override se o theme direto falhar,
-          # mas 'night' geralmente é aceito se estiver dentro de 'plugin_...' ou como input direto se suportado.
-          # Vamos tentar sem o input 'theme' solto que deu erro, e usar a query string interna se necessário.
-          # Mas o erro diz que 'theme' NÃO é um input válido. O correto pode ser usar parametros de plugin.
+          # --- TEMA E CORES ---
+          theme: night # Fundo escuro profundo
+          # Aqui definimos as cores dos blocos do gráfico 3D (do menos ativo ao mais ativo)
+          # Usei um gradiente de Roxo para Rosa/Neon para combinar com a estética "Design Engineer"
+          config_colors: gradient(#161b22, #4c1d95, #7c3aed, #db2777, #f472b6)
 
-          # VAMOS USAR O METÓDO GARANTIDO: Query Params via 'extras_css' ou config direta
-          # Na verdade, o template 'classic' não usa input 'theme'.
-          # O tema é definido pelo plugin ou css.
-          # Vamos remover 'theme: night' que causou o warn e usar cores manuais ou css.
-
-          # --- PLUGINS ---
-
-          # 1. CALENDÁRIO ISOMÉTRICO 3D
+          # --- O GRÁFICO 3D (Isocalendar) ---
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
 
-          # 2. LINGUAGENS (Radar / Gráfico)
-          plugin_languages: yes
-          plugin_languages_sections: most-used
-          plugin_languages_indepth: yes
-          plugin_languages_limit: 8
-
-          # 3. ACHIEVEMENTS (Conquistas 3D)
-          plugin_achievements: yes
-          plugin_achievements_display: compact
-          plugin_achievements_threshold: B
+          # --- STREAK (Apenas a máxima e atual) ---
+          plugin_streat: yes
+          plugin_streat_sections: timeline
+          # Isso vai mostrar a sua "sequência" de contribuições de forma elegante
