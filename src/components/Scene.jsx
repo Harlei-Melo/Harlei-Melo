@@ -10,9 +10,13 @@ const Scene = ({ color, speed }) => {
         gl={{ preserveDrawingBuffer: true }} 
         camera={{ position: [0, 0, 8], fov: 50 }}
       >
+        {/* --- ADICIONE ESTA LINHA ABAIXO --- */}
+        <color attach="background" args={['#000000']} />
+        
         <ambientLight intensity={0.5} />
         <StarField />
         <BlackHole color={color} speed={speed} />
+
         <EffectComposer>
           <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} intensity={1.5} />
           <Vignette eskil={false} offset={0.1} darkness={1.1} />
@@ -21,4 +25,5 @@ const Scene = ({ color, speed }) => {
     </div>
   );
 };
+
 export default Scene;

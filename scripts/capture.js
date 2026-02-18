@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import GifEncoder from "gif-encoder"; // Mudou de 'gifencoder' para 'gif-encoder'
+import GifEncoder from "gif-encoder";
 import { PNG } from "pngjs";
 import fs from "fs";
 import "dotenv/config";
@@ -53,7 +53,7 @@ async function fetchGithubData() {
     10,
   ).toFixed(2);
   const color = data.color.replace("#", "");
-  console.log(`🎬 Iniciando GIF (Pure JS) para ${USERNAME} (Cor: #${color})`);
+  console.log(`🎬 Iniciando GIF (Solid Background) para ${USERNAME}`);
 
   const browser = await puppeteer.launch({
     headless: "new",
@@ -61,16 +61,16 @@ async function fetchGithubData() {
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
-      "--use-gl=swiftshader",
+      "--use-gl=swiftshader", // Renderização via CPU
       "--disable-web-security",
     ],
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 800, height: 400 });
+  // Reduzi um pouco a escala para garantir performance
+  await page.setViewport({ width: 800, height: 400, deviceScaleFactor: 1 });
 
   try {
-    // Usando IP direto
     await page.goto(
       `http://127.0.0.1:5173/?color=${color}&activity=${activity}`,
       {
@@ -79,32 +79,29 @@ async function fetchGithubData() {
       },
     );
 
-    console.log("⏳ Esperando carregamento (5s)...");
-    await new Promise((r) => setTimeout(r, 5000));
+    console.log("⏳ Esperando renderização (6s)...");
+    await new Promise((r) => setTimeout(r, 6000));
 
-    // --- MUDANÇA AQUI: Configuração do gif-encoder ---
     const encoder = new GifEncoder(800, 400);
     const file = fs.createWriteStream("github-profile.gif");
     encoder.pipe(file);
 
-    encoder.setRepeat(0); // Loop infinito
-    encoder.setDelay(150); // Delay entre frames
-    encoder.setQuality(20); // Qualidade
-    encoder.writeHeader(); // Importante: gif-encoder exige escrever o cabeçalho explicitamente
+    encoder.setRepeat(0);
+    encoder.setDelay(150);
+    encoder.setQuality(20);
+    encoder.writeHeader();
 
     console.log("🎥 Gravando frames...");
     for (let i = 0; i < 20; i++) {
-      const buffer = await page.screenshot({ omitBackground: true });
+      // CORREÇÃO: Removemos o omitBackground: true
+      const buffer = await page.screenshot();
       const png = PNG.sync.read(buffer);
-
-      // O pngjs retorna RGBA, e o gif-encoder aceita isso perfeitamente
       encoder.addFrame(png.data);
-
       await new Promise((r) => setTimeout(r, 100));
     }
 
     encoder.finish();
-    console.log("✅ GIF Salvo com sucesso!");
+    console.log("✅ GIF Salvo!");
   } catch (e) {
     console.error("❌ Erro:", e);
     process.exit(1);
