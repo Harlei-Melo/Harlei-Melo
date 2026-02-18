@@ -31,21 +31,24 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Start Render Server
-        # Roda o servidor e salva o log em server.log para debug
+      # --- AQUI ESTÁ A MUDANÇA MÁGICA ---
+      - name: Build Application
+        run: npm run build
+        # Compila o site antes de rodar. Zero delay.
+
+      - name: Start Production Server
         run: |
-          npm run dev > server.log 2>&1 &
-          echo "Processo do servidor iniciado. PID: $!"
+          npm run preview > server.log 2>&1 &
+          echo "Server PID: $!"
 
       - name: Wait for Server
-        # Tenta conectar por 60 segundos
+        # Espera o servidor responder na porta 5173
         run: npx wait-on http://127.0.0.1:5173 -t 60000
 
-      - name: Debug Server Logs (If Failed)
+      - name: Debug Logs (Caso Falhe)
         if: failure()
-        run: |
-          echo "=== LOGS DO SERVIDOR ==="
-          cat server.log
+        run: cat server.log
+      # ----------------------------------
 
       - name: Capture Animation
         run: npm run capture
