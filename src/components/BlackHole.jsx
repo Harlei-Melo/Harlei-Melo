@@ -20,7 +20,7 @@ const BlackHole = ({ speed = 1.0 }) => {
   // Limitador de velocidade bem baixo para rotação pesada
   const safeSpeed = useMemo(() => {
     // Multiplicamos por 0.1 para garantir que seja LENTO
-    return Math.max(0.1, Math.min(speed, 2.0)) * 0.1;
+    return Math.max(0.1, Math.min(speed, 2.0)) * 0.35;
   }, [speed]);
 
   const uniforms = useMemo(

@@ -63,7 +63,7 @@ async function capture() {
       // Mas nossa função updateColor dentro do BlackHole espera o tempo "cru"
       // Então passamos o tempo simulado da animação
       // Nota: No BlackHole.jsx, ajustamos o seekAnimation para lidar com isso.
-      if (window.seekAnimation) window.seekAnimation(t * 0.1); // *0.1 simula o safeSpeed
+      if (window.seekAnimation) window.seekAnimation(t * 1.5); // *0.1 simula o safeSpeed
     }, time);
 
     const screenshotBuffer = await page.screenshot({
