@@ -1,3 +1,3 @@
 <div align="center">
-  <img src="./github-profile.svg" width="100%" alt="Black Hole Animation" />
+  <img src="./github-profile.svg?v=1" width="100%" alt="Black Hole Animation" />
 </div>
