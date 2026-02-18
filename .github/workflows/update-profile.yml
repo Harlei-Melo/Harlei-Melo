@@ -1,36 +1,52 @@
-name: Update Galaxy Profile
+name: Generate Event Horizon
 
 on:
+  # Roda todo dia à meia-noite (para atualizar stats se você ligar eles ao shader)
   schedule:
     - cron: "0 0 * * *"
+  # Permite rodar manualmente na aba Actions
   workflow_dispatch:
+  # Roda quando você mexe no código do gerador
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'scripts/**'
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
+      
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Install & Generate
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
-        run: |
-          npm install dotenv
-          node scripts/generate.js
+      - name: Install Dependencies
+        run: npm ci
 
-      - name: Push
+      - name: Start Render Server & Capture
         run: |
-          git config user.name "Galaxy Bot"
-          git config user.email "actions@github.com"
-          git add github-profile.svg
-          git commit -m "update: svg profile [skip ci]" || exit 0
-          git push
+          # 1. Inicia o servidor Vite em background (&)
+          npm run dev &
+          
+          # 2. Espera o servidor subir (usando wait-on para garantir)
+          npx wait-on http://127.0.0.1:5173 -t 30000
+          
+          # 3. Roda o script de captura
+          npm run capture
+
+      - name: Commit & Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(profile): update event horizon sequence [skip ci]"
+          file_pattern: "github-profile.gif"
+          branch: main
