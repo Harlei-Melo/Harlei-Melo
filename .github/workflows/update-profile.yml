@@ -2,59 +2,35 @@ name: Update Galaxy Profile
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Roda todo dia à meia-noite
-  workflow_dispatch: # Botão manual para testar
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
-  build-and-capture:
+  generate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Instalar Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
 
-      - name: Instalar dependências
-        run: npm ci
-
-      - name: Gerar GIF do Buraco Negro
+      - name: Install & Generate
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
         run: |
-          # 1. MATADOR DE ZUMBIS: Força o fechamento de qualquer coisa na porta 5173
-          sudo fuser -k 5173/tcp || true
+          npm install dotenv
+          node scripts/generate.js
 
-          # 2. Inicia o servidor garantindo a porta 5173 e IP local
-          npm run dev -- --host 127.0.0.1 --port 5173 --strictPort &
-
-          # 3. Espera o servidor estar 100% pronto
-          npx wait-on http://127.0.0.1:5173
-
-          # 4. Remove GIF antigo para garantir que o novo será gerado
-          rm -f github-profile.gif
-
-          # 5. Roda o script de captura
-          node scripts/capture.js
-
-      - name: Commitar e Pushar
+      - name: Push
         run: |
           git config user.name "Galaxy Bot"
           git config user.email "actions@github.com"
-
-          # Adiciona o arquivo gerado
-          git add github-profile.gif
-
-          # Tenta commitar (se não tiver mudança, não falha graças ao "|| exit 0")
-          git commit -m "update: galaxy animation [skip ci]" || exit 0
-
-          # --- CORREÇÃO DE CONFLITO ---
-          # Puxa atualizações do GitHub antes de enviar para evitar erro de rejeição
-          git pull --rebase origin main
-          # ----------------------------
-
+          git add github-profile.svg
+          git commit -m "update: svg profile [skip ci]" || exit 0
           git push
