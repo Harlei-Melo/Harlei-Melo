@@ -1,26 +1,26 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-// Cores das Tecnologias
 const TECH_STACK = [
-  { name: "FLUTTER", color: "#02569B" }, // Azul Escuro
-  { name: "JAVASCRIPT", color: "#F7DF1E" }, // Amarelo
-  { name: "PYTHON", color: "#3776AB" }, // Azul/Verde
-  { name: "REACT", color: "#61DAFB" }, // Ciano
-  { name: "GLSL", color: "#ff5500" }, // Laranja (Acentua o GLSL)
+  { name: "FLUTTER", color: "#02569B" },
+  { name: "JAVASCRIPT", color: "#F7DF1E" },
+  { name: "PYTHON", color: "#3776AB" },
+  { name: "REACT", color: "#61DAFB" },
+  { name: "GLSL", color: "#ff5500" },
 ];
 
 const BlackHole = ({ speed = 1.0 }) => {
   const meshRef = useRef();
   const { viewport } = useThree();
 
-  // AUMENTADO: 5 segundos por cor para uma transição "respiração" lenta
-  const CYCLE_DURATION = 5.0;
+  // CONFIGURAÇÃO DE TEMPO (SLOW MOTION)
+  const CYCLE_DURATION = 6.0; // 6 segundos por cor (Total 30s)
 
-  // Limitador de velocidade suave (Max 2.0x, Min 0.2x)
+  // Limitador de velocidade bem baixo para rotação pesada
   const safeSpeed = useMemo(() => {
-    return Math.max(0.2, Math.min(speed, 2.0));
+    // Multiplicamos por 0.1 para garantir que seja LENTO
+    return Math.max(0.1, Math.min(speed, 2.0)) * 0.1;
   }, [speed]);
 
   const uniforms = useMemo(
@@ -42,7 +42,6 @@ const BlackHole = ({ speed = 1.0 }) => {
     }
   `;
 
-  // SEU FRAGMENT SHADER ORIGINAL (Mantido intacto)
   const fragmentShader = `
     varying vec2 vUv;
     uniform float uTime;
@@ -70,27 +69,45 @@ const BlackHole = ({ speed = 1.0 }) => {
     }
   `;
 
+  // Função auxiliar para calcular a cor baseada no tempo
+  const updateColor = (time) => {
+    const totalIndex = Math.floor(time / CYCLE_DURATION);
+    const currentIndex = totalIndex % TECH_STACK.length;
+    const nextIndex = (currentIndex + 1) % TECH_STACK.length;
+    const mixFactor = (time % CYCLE_DURATION) / CYCLE_DURATION;
+
+    const currentColor = new THREE.Color(TECH_STACK[currentIndex].color);
+    const nextColor = new THREE.Color(TECH_STACK[nextIndex].color);
+
+    meshRef.current.material.uniforms.uColor.value
+      .copy(currentColor)
+      .lerp(nextColor, mixFactor);
+  };
+
+  // EXPOMOS ESSA FUNÇÃO PARA O PUPPETEER CONTROLAR A COR TAMBÉM
+  useEffect(() => {
+    window.seekAnimation = (time) => {
+      if (meshRef.current) {
+        // Atualiza rotação
+        meshRef.current.material.uniforms.uTime.value = time;
+        // Atualiza cor (Sincronizado!)
+        // Multiplicamos por um fator para o ciclo de cor ter velocidade independente da rotação
+        // Aqui usamos o 'time' puro para cor, mas para rotação usamos o time vindo do loop
+        updateColor(time / safeSpeed);
+      }
+    };
+  }, [safeSpeed]); // Re-cria se a velocidade mudar
+
   useFrame((state) => {
-    if (meshRef.current) {
-      // Atualiza rotação física (uTime)
-      const time = state.clock.elapsedTime * safeSpeed;
-      meshRef.current.material.uniforms.uTime.value = time;
+    // Só roda se NÃO estivermos gravando (o Puppeteer assume se isCapturing for true)
+    if (meshRef.current && !window.isCapturing) {
+      const time = state.clock.elapsedTime;
 
-      // Atualiza Ciclo de Cores (Independente da velocidade de rotação)
-      const colorTime = state.clock.elapsedTime;
+      // Rotação (Afetada pelo speed)
+      meshRef.current.material.uniforms.uTime.value = time * safeSpeed;
 
-      const totalIndex = Math.floor(colorTime / CYCLE_DURATION);
-      const currentIndex = totalIndex % TECH_STACK.length;
-      const nextIndex = (currentIndex + 1) % TECH_STACK.length;
-      const mixFactor = (colorTime % CYCLE_DURATION) / CYCLE_DURATION;
-
-      const currentColor = new THREE.Color(TECH_STACK[currentIndex].color);
-      const nextColor = new THREE.Color(TECH_STACK[nextIndex].color);
-
-      // Lerp suave entre as cores
-      meshRef.current.material.uniforms.uColor.value
-        .copy(currentColor)
-        .lerp(nextColor, mixFactor);
+      // Cor (Tempo real, independente da rotação)
+      updateColor(time);
     }
   });
 
