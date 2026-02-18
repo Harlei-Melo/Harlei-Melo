@@ -1,0 +1,30 @@
+name: Update Galaxy Profile
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build-and-capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Start Server & Capture
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+        run: |
+          npm run dev -- --host 127.0.0.1 &
+          npx wait-on http://127.0.0.1:5173
+          node scripts/capture.js
+      - name: Commit & Push
+        run: |
+          git config user.name "Galaxy Bot"
+          git config user.email "actions@github.com"
+          git add github-profile.gif
+          git commit -m "update: galaxy animation [skip ci]" || exit 0
+          git push
