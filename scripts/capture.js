@@ -10,7 +10,7 @@ const HEIGHT = 450; // Altura do GIF
 const FRAMES = 60; // Total de frames (loop suave)
 const DURATION = 2; // Segundos de loop
 const OUTPUT_FILE = "github-profile.gif";
-const URL = "http://localhost:5173"; // Certifique-se que sua porta é essa
+const URL = "http://127.0.0.1:5173";
 
 async function capture() {
   console.log("🚀 Iniciando Protocolo de Captura...");

@@ -1,25 +1,23 @@
 name: Generate Event Horizon
 
 on:
-  # Roda todo dia à meia-noite (para atualizar stats se você ligar eles ao shader)
   schedule:
     - cron: "0 0 * * *"
-  # Permite rodar manualmente na aba Actions
   workflow_dispatch:
-  # Roda quando você mexe no código do gerador
   push:
     branches:
       - main
     paths:
-      - 'src/**'
-      - 'scripts/**'
+      - "src/**"
+      - "scripts/**"
+      - ".github/workflows/**"
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -27,26 +25,34 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install Dependencies
         run: npm ci
 
-      - name: Start Render Server & Capture
+      - name: Start Render Server
+        # Roda o servidor e salva o log em server.log para debug
         run: |
-          # 1. Inicia o servidor Vite em background (&)
-          npm run dev &
-          
-          # 2. Espera o servidor subir (usando wait-on para garantir)
-          npx wait-on http://127.0.0.1:5173 -t 30000
-          
-          # 3. Roda o script de captura
-          npm run capture
+          npm run dev > server.log 2>&1 &
+          echo "Processo do servidor iniciado. PID: $!"
+
+      - name: Wait for Server
+        # Tenta conectar por 60 segundos
+        run: npx wait-on http://127.0.0.1:5173 -t 60000
+
+      - name: Debug Server Logs (If Failed)
+        if: failure()
+        run: |
+          echo "=== LOGS DO SERVIDOR ==="
+          cat server.log
+
+      - name: Capture Animation
+        run: npm run capture
 
       - name: Commit & Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(profile): update event horizon sequence [skip ci]"
+          commit_message: "chore(profile): update singularity sequence [skip ci]"
           file_pattern: "github-profile.gif"
           branch: main
