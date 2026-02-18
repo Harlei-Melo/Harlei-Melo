@@ -1,1013 +1,661 @@
-<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="background: #000;">
+<svg width="850" height="450" viewBox="0 0 850 450" xmlns="http://www.w3.org/2000/svg" style="background: #030303;">
     <defs>
-      <filter id="plasmaNoise" x="-50%" y="-50%" width="200%" height="200%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="4" seed="1">
-          <animate attributeName="seed" from="1" to="100" dur="60s" repeatCount="indefinite" />
-        </feTurbulence>
-        <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
-        <feDisplacementMap in="SourceGraphic" scale="20" />
+      <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
       </filter>
 
-      <filter id="bloom" x="-100%" y="-100%" width="300%" height="300%">
-        <feGaussianBlur stdDeviation="15" result="blur1" />
-        <feGaussianBlur stdDeviation="5" result="blur2" />
+      <filter id="intenseBloom" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="12" result="blur1" />
+        <feGaussianBlur stdDeviation="25" result="blur2" />
         <feMerge>
-          <feMergeNode in="blur1" />
           <feMergeNode in="blur2" />
+          <feMergeNode in="blur1" />
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
 
-      <radialGradient id="singularityGrad">
-        <stop offset="92%" stop-color="#000" />
-        <stop offset="95%" stop-color="#663399" stop-opacity="0.3" />
-        <stop offset="100%" stop-color="#000" />
-      </radialGradient>
+      <linearGradient id="dopplerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+        <stop offset="30%" stop-color="#663399" stop-opacity="0.8" />
+        <stop offset="70%" stop-color="#663399" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="#000000" stop-opacity="0.1" />
+      </linearGradient>
+
+      <linearGradient id="lensingGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="#663399" stop-opacity="0.8" />
+        <stop offset="100%" stop-color="#663399" stop-opacity="0.0" />
+      </linearGradient>
+      
+      <mask id="holeMask">
+        <rect x="0" y="0" width="850" height="450" fill="white" />
+        <circle cx="425"Kf cy="225" r="78" fill="black" />
+      </mask>
     </defs>
 
-    <g transform="translate(400, 225)">
-      
-      <ellipse fill="white" opacity="0">
+    <g transform="translate(425, 225)">
+       
+      <circle r="0.43570706717087" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 79.31613856296508 -263.72282687333905 L 0 0" 
-          dur="2.4616380501741966s" 
-          begin="-7.927326620928223s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 361.7961414576129 3.5722275632684983 Q 96.23668181906125 153.18551912077712 0 0" 
+          dur="6.013537104530388s" 
+          begin="-9.999976016041943s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.4616380501741966s" begin="-7.927326620928223s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.4616380501741966s" begin="-7.927326620928223s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.4616380501741966s" begin="-7.927326620928223s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.013537104530388s" begin="-9.999976016041943s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.3589428360940726" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 337.80932321006236 -170.77181940670897 L 0 0" 
-          dur="2.7735144939667666s" 
-          begin="-1.0530695154258196s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -79.89719746018655 91.22124127545978 Q -59.96433387580038 -8.972063212464656 0 0" 
+          dur="4.651989334103236s" 
+          begin="-8.18891045024756s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.7735144939667666s" begin="-1.0530695154258196s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.7735144939667666s" begin="-1.0530695154258196s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.7735144939667666s" begin="-1.0530695154258196s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="4.651989334103236s" begin="-8.18891045024756s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8163364704855638" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 77.91718383807155 -303.89329816952943 L 0 0" 
-          dur="3.4883671319016134s" 
-          begin="-9.929658251973857s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -134.22747368740693 -57.69750788766895 Q -11.986317380481426 -72.06131051328552 0 0" 
+          dur="9.201069361745134s" 
+          begin="-1.2065899660281887s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.4883671319016134s" begin="-9.929658251973857s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.4883671319016134s" begin="-9.929658251973857s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.4883671319016134s" begin="-9.929658251973857s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="9.201069361745134s" begin="-1.2065899660281887s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.35163297486559203" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 73.55226519433076 -223.54424526905473 L 0 0" 
-          dur="4.962365429382908s" 
-          begin="-7.546939927856107s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 131.74763623115 -74.40576174184103 Q 66.89692062832795 35.330104283273094 0 0" 
+          dur="8.296995870394085s" 
+          begin="-7.377940692007529s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.962365429382908s" begin="-7.546939927856107s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.962365429382908s" begin="-7.546939927856107s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.962365429382908s" begin="-7.546939927856107s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.296995870394085s" begin="-7.377940692007529s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.2768049016289597" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 17.750870517690743 -283.3377194587684 L 0 0" 
-          dur="4.979502681199891s" 
-          begin="-6.020686696346955s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 67.87060389377966 -116.28360175099795 Q 67.25996033344688 -2.8585771313556125 0 0" 
+          dur="9.65116184047885s" 
+          begin="-6.027418914075349s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.979502681199891s" begin="-6.020686696346955s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.979502681199891s" begin="-6.020686696346955s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.979502681199891s" begin="-6.020686696346955s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="9.65116184047885s" begin="-6.027418914075349s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8097170929479018" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 82.91102730124888 -200.68100343287102 L 0 0" 
-          dur="3.8869116834068116s" 
-          begin="-2.0124954331380085s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -175.0707641841138 -83.90254851184794 Q -11.994788727308507 -96.32485438912107 0 0" 
+          dur="8.121510376736524s" 
+          begin="-5.488591046447904s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.8869116834068116s" begin="-2.0124954331380085s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.8869116834068116s" begin="-2.0124954331380085s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.8869116834068116s" begin="-2.0124954331380085s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.121510376736524s" begin="-5.488591046447904s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6585593824755185" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -182.54502457213798 -284.1405634400931 L 0 0" 
-          dur="3.4252519776486s" 
-          begin="-3.761158779374738s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 321.5084101200659 -26.127395015057626 Q 97.8485900788283 128.21165335739477 0 0" 
+          dur="5.682292295838838s" 
+          begin="-8.141686940053305s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.4252519776486s" begin="-3.761158779374738s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.4252519776486s" begin="-3.761158779374738s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.4252519776486s" begin="-3.761158779374738s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="5.682292295838838s" begin="-8.141686940053305s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8995111025912612" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 250.02049108872626 300.7220352785854 L 0 0" 
-          dur="4.649438574779911s" 
-          begin="-9.446564797937192s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 101.31610499908936 -228.22519511981235 Q 123.3931024240147 -19.02801826497837 0 0" 
+          dur="6.77204669244824s" 
+          begin="-5.590973080552701s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.649438574779911s" begin="-9.446564797937192s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.649438574779911s" begin="-9.446564797937192s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.649438574779911s" begin="-9.446564797937192s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.77204669244824s" begin="-5.590973080552701s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.874588941965289" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -258.0552392102139 -250.05608460122912 L 0 0" 
-          dur="3.2490089809099123s" 
-          begin="-5.192250188208605s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -111.97031794100468 129.77215881009923 Q -84.84866362344725 -12.051788532243721 0 0" 
+          dur="6.864131163742487s" 
+          begin="-5.980050810524828s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.2490089809099123s" begin="-5.192250188208605s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.2490089809099123s" begin="-5.192250188208605s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.2490089809099123s" begin="-5.192250188208605s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.864131163742487s" begin="-5.980050810524828s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.5922709590284831" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -340.8865125636737 119.27953715720486 L 0 0" 
-          dur="3.4673942642583944s" 
-          begin="-2.4498075888299753s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 11.263476927629112 -273.7813175090308 Q 118.23235871120907 -69.22339406554677 0 0" 
+          dur="8.111979706011482s" 
+          begin="-3.6348945646536324s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.4673942642583944s" begin="-2.4498075888299753s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.4673942642583944s" begin="-2.4498075888299753s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.4673942642583944s" begin="-2.4498075888299753s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.111979706011482s" begin="-3.6348945646536324s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.27540394688275643" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 199.74183210355784 13.094914806487107 L 0 0" 
-          dur="4.448282774254155s" 
-          begin="-9.011001840454888s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 275.22083749477275 122.27258867543419 Q 22.906808756828916 148.82725538609208 0 0" 
+          dur="6.646225798723689s" 
+          begin="-7.00714809654521s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.448282774254155s" begin="-9.011001840454888s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.448282774254155s" begin="-9.011001840454888s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.448282774254155s" begin="-9.011001840454888s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.646225798723689s" begin="-7.00714809654521s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6840913562491455" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 6.516301712210967 -259.30172806860116 L 0 0" 
-          dur="3.5196259198572837s" 
-          begin="-7.408634945881037s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -328.01843900074255 -61.64293200683528 Q -62.679190128565466 -154.66190860243495 0 0" 
+          dur="5.206173265793633s" 
+          begin="-3.2339763423823586s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.5196259198572837s" begin="-7.408634945881037s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.5196259198572837s" begin="-7.408634945881037s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.5196259198572837s" begin="-7.408634945881037s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="5.206173265793633s" begin="-3.2339763423823586s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8405224628216386" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 115.2999205908325 -226.58818334532126 L 0 0" 
-          dur="2.090586985436678s" 
-          begin="-1.7492633222987841s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -7.448374400237295 210.0690530953381 Q -90.39569342460693 53.61660141858114 0 0" 
+          dur="6.344041792661273s" 
+          begin="-1.8734620430033933s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.090586985436678s" begin="-1.7492633222987841s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.090586985436678s" begin="-1.7492633222987841s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.090586985436678s" begin="-1.7492633222987841s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.344041792661273s" begin="-1.8734620430033933s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.36914497444001065" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -271.34857933784195 231.8788551589959 L 0 0" 
-          dur="2.9826794753854173s" 
-          begin="-8.903509941501085s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 58.55252456146996 264.27841971866593 Q -95.37327903458866 96.03024503545595 0 0" 
+          dur="5.368173780068579s" 
+          begin="-9.578477113787454s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.9826794753854173s" begin="-8.903509941501085s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.9826794753854173s" begin="-8.903509941501085s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.9826794753854173s" begin="-8.903509941501085s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="5.368173780068579s" begin="-9.578477113787454s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6241749082054314" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 255.70174719721277 -68.41643006832984 L 0 0" 
-          dur="3.165793097944707s" 
-          begin="-4.952072275071185s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 149.10732797600778 307.65106994344114 Q -89.15820783761825 145.84703630364345 0 0" 
+          dur="7.551427805037493s" 
+          begin="-3.1702783753976704s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.165793097944707s" begin="-4.952072275071185s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.165793097944707s" begin="-4.952072275071185s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.165793097944707s" begin="-4.952072275071185s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.551427805037493s" begin="-3.1702783753976704s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9519017215850474" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 251.07536139202836 -179.7428873181257 L 0 0" 
-          dur="2.0511362838729195s" 
-          begin="-6.232277233706993s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -40.89904666894286 -294.8941548484058 Q 113.02351283567094 -96.8736764649247 0 0" 
+          dur="6.036888892392792s" 
+          begin="-5.601363373402863s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.0511362838729195s" begin="-6.232277233706993s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.0511362838729195s" begin="-6.232277233706993s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.0511362838729195s" begin="-6.232277233706993s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.036888892392792s" begin="-5.601363373402863s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9053183720950579" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 140.19927053819615 373.0919862937455 L 0 0" 
-          dur="2.5298471035504875s" 
-          begin="-4.91104326513409s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -17.3551136211554 -229.93948077381683 Q 92.0551967124231 -69.42032811123129 0 0" 
+          dur="9.20416591650969s" 
+          begin="-9.065935423976477s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.5298471035504875s" begin="-4.91104326513409s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.5298471035504875s" begin="-4.91104326513409s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.5298471035504875s" begin="-4.91104326513409s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="9.20416591650969s" begin="-9.065935423976477s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.5621884414678826" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 236.8492938032969 57.68486368341775 L 0 0" 
-          dur="3.517550476964237s" 
-          begin="-5.805964683417047s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -340.9576388275201 -59.05856262902583 Q -67.26206580254006 -159.40771884584456 0 0" 
+          dur="8.800795324920692s" 
+          begin="-5.569238893836637s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.517550476964237s" begin="-5.805964683417047s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.517550476964237s" begin="-5.805964683417047s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.517550476964237s" begin="-5.805964683417047s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.800795324920692s" begin="-5.569238893836637s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6822996679320164" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 106.16962938727872 262.811529465676 L 0 0" 
-          dur="3.3980214044176087s" 
-          begin="-6.12254322155821s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -203.06533957468724 -165.58050512002643 Q 14.807259747118632 -130.16855999771178 0 0" 
+          dur="5.340164086106339s" 
+          begin="-2.3070330566561204s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.3980214044176087s" begin="-6.12254322155821s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.3980214044176087s" begin="-6.12254322155821s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.3980214044176087s" begin="-6.12254322155821s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="5.340164086106339s" begin="-2.3070330566561204s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9174899747526342" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 185.9624856010347 307.9387885910454 L 0 0" 
-          dur="2.750918619897991s" 
-          begin="-4.10681950517175s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -256.8573571904146 -202.0900769714909 Q 15.636156859963345 -162.6638739454691 0 0" 
+          dur="8.227542287288529s" 
+          begin="-7.848109719665908s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.750918619897991s" begin="-4.10681950517175s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.750918619897991s" begin="-4.10681950517175s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.750918619897991s" begin="-4.10681950517175s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.227542287288529s" begin="-7.848109719665908s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.30087676102878497" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -4.162057646080148 206.8458558295469 L 0 0" 
-          dur="2.9681626930077405s" 
-          begin="-7.304152104506905s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -12.453204584234259 -148.43306598932458 Q 59.0868115318915 -45.338869073309816 0 0" 
+          dur="9.809785453644567s" 
+          begin="-9.680608662151203s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.9681626930077405s" begin="-7.304152104506905s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.9681626930077405s" begin="-7.304152104506905s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.9681626930077405s" begin="-7.304152104506905s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="9.809785453644567s" begin="-9.680608662151203s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8893734692510928" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -257.03331766775125 -114.72545278514936 L 0 0" 
-          dur="3.2397515409640194s" 
-          begin="-3.54930562607221s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -137.41430405762225 36.175484816186405 Q -52.342943087889225 -48.042225949987866 0 0" 
+          dur="7.310075719881067s" 
+          begin="-4.170965232867547s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.2397515409640194s" begin="-3.54930562607221s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.2397515409640194s" begin="-3.54930562607221s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.2397515409640194s" begin="-3.54930562607221s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.310075719881067s" begin="-4.170965232867547s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6573673620410055" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 80.01553409204965 -297.13073634833205 L 0 0" 
-          dur="3.06348088978785s" 
-          begin="-7.762181859400929s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 24.431015756931718 -169.44754485324844 Q 77.89266329455711 -35.497454159531294 0 0" 
+          dur="6.68156659335037s" 
+          begin="-6.898862499188125s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.06348088978785s" begin="-7.762181859400929s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.06348088978785s" begin="-7.762181859400929s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.06348088978785s" begin="-7.762181859400929s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.68156659335037s" begin="-6.898862499188125s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.7301890284508861" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 217.26080582694766 -94.63663161954214 L 0 0" 
-          dur="3.229273436051309s" 
-          begin="-1.3832073139554035s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -165.3175936510325 47.21279006478474 Q -64.52483500078394 -56.800389498567185 0 0" 
+          dur="6.333496091073426s" 
+          begin="-0.029731741603220563s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.229273436051309s" begin="-1.3832073139554035s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.229273436051309s" begin="-1.3832073139554035s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.229273436051309s" begin="-1.3832073139554035s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.333496091073426s" begin="-0.029731741603220563s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6558725792793392" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -211.0787654981232 -145.82835348998177 L 0 0" 
-          dur="2.1358824456385186s" 
-          begin="-4.681617264332925s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 47.674223547766154 334.56700899080397 Q -127.88496881319645 110.44190113191434 0 0" 
+          dur="6.522031173129228s" 
+          begin="-7.862298727204395s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.1358824456385186s" begin="-4.681617264332925s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.1358824456385186s" begin="-4.681617264332925s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.1358824456385186s" begin="-4.681617264332925s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.522031173129228s" begin="-7.862298727204395s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.2918372677914036" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 247.6390645631599 -46.55744346702727 L 0 0" 
-          dur="3.6726377741941487s" 
-          begin="-2.029203175364116s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 26.18175271382379 288.48477288178316 Q -114.30275228798402 88.95008661798606 0 0" 
+          dur="7.209581349576643s" 
+          begin="-0.10312466543065169s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.6726377741941487s" begin="-2.029203175364116s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.6726377741941487s" begin="-2.029203175364116s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.6726377741941487s" begin="-2.029203175364116s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.209581349576643s" begin="-0.10312466543065169s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.3274766472926738" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -98.95173643647229 347.7819378956385 L 0 0" 
-          dur="2.044925758089024s" 
-          begin="-1.5652023491672051s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 130.8931933402494 -198.37252495111034 Q 118.8233090568104 1.480845826350036 0 0" 
+          dur="9.08760228468417s" 
+          begin="-5.351340142774332s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.044925758089024s" begin="-1.5652023491672051s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.044925758089024s" begin="-1.5652023491672051s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.044925758089024s" begin="-1.5652023491672051s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="9.08760228468417s" begin="-5.351340142774332s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.647963423933097" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 259.68699672553356 170.87860607038945 L 0 0" 
-          dur="4.060557082591013s" 
-          begin="-1.8813181765442333s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -95.420389941576 125.57607896348699 Q -78.61224177299508 -6.222222234519929 0 0" 
+          dur="8.330837774244753s" 
+          begin="-8.676359548919518s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.060557082591013s" begin="-1.8813181765442333s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.060557082591013s" begin="-1.8813181765442333s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.060557082591013s" begin="-1.8813181765442333s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.330837774244753s" begin="-8.676359548919518s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9444618493040275" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -146.91770341335766 163.8900782777716 L 0 0" 
-          dur="3.090181386305546s" 
-          begin="-0.6260255944485649s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 286.4633401213956 20.65159053824044 Q 68.69954449310829 126.10434545548307 0 0" 
+          dur="7.227259492564823s" 
+          begin="-9.201434310646299s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.090181386305546s" begin="-0.6260255944485649s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.090181386305546s" begin="-0.6260255944485649s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.090181386305546s" begin="-0.6260255944485649s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.227259492564823s" begin="-9.201434310646299s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.4033568784368695" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -374.0578432175108 -89.94824815383666 L 0 0" 
-          dur="2.305766284441432s" 
-          begin="-4.263767726982626s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 147.5559609625823 37.0415946453693 Q 24.277699413789307 72.08885939269283 0 0" 
+          dur="7.471673937284478s" 
+          begin="-2.562363839639281s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.305766284441432s" begin="-4.263767726982626s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.305766284441432s" begin="-4.263767726982626s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.305766284441432s" begin="-4.263767726982626s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.471673937284478s" begin="-2.562363839639281s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6316422066537739" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 129.90075471889267 -321.42653097486107 L 0 0" 
-          dur="3.1641974773775154s" 
-          begin="-3.13583318551532s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 212.19787903567763 -224.27322941180915 Q 151.68520928125378 28.691507625301888 0 0" 
+          dur="7.9692272308428365s" 
+          begin="-9.882445184178774s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.1641974773775154s" begin="-3.13583318551532s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.1641974773775154s" begin="-3.13583318551532s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.1641974773775154s" begin="-3.13583318551532s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.9692272308428365s" begin="-9.882445184178774s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9345139454184865" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 254.6495688426949 139.5392269378125 L 0 0" 
-          dur="2.018195533629077s" 
-          begin="-2.095696067064041s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 94.28495984800833 81.67209636745523 Q -8.891159073542052 61.73284000414876 0 0" 
+          dur="7.653088178617668s" 
+          begin="-0.8864598274464819s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.018195533629077s" begin="-2.095696067064041s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.018195533629077s" begin="-2.095696067064041s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.018195533629077s" begin="-2.095696067064041s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.653088178617668s" begin="-0.8864598274464819s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9485872407233804" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 265.3918152465919 -50.759918379979254 L 0 0" 
-          dur="4.280531902405548s" 
-          begin="-9.188010024223425s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -214.42158933196927 187.0390487408259 Q -136.6202058427246 -39.68595830859747 0 0" 
+          dur="8.352587218189447s" 
+          begin="-4.152622504463251s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.280531902405548s" begin="-9.188010024223425s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.280531902405548s" begin="-9.188010024223425s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.280531902405548s" begin="-9.188010024223425s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.352587218189447s" begin="-4.152622504463251s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.6906703060464932" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 77.9274363383471 -209.5355417941307 L 0 0" 
-          dur="3.2668841137625555s" 
-          begin="-5.670434101871519s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 245.49777320034582 123.45769353463515 Q 14.378472992469762 136.64186473848306 0 0" 
+          dur="6.759341808659125s" 
+          begin="-9.875273799807802s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.2668841137625555s" begin="-5.670434101871519s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.2668841137625555s" begin="-5.670434101871519s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.2668841137625555s" begin="-5.670434101871519s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.759341808659125s" begin="-9.875273799807802s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8334102407417754" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 272.16342964474165 83.1051207156706 L 0 0" 
-          dur="3.2337392700163026s" 
-          begin="-9.908291068258466s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 91.7086963674089 131.87762124517891 Q -30.710385853915675 74.21199494945363 0 0" 
+          dur="7.230094493308503s" 
+          begin="-5.984331193958601s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.2337392700163026s" begin="-9.908291068258466s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.2337392700163026s" begin="-9.908291068258466s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.2337392700163026s" begin="-9.908291068258466s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.230094493308503s" begin="-5.984331193958601s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.29171404737353995" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 175.1862823248386 155.51754642847143 L 0 0" 
-          dur="4.998900218400498s" 
-          begin="-4.445268688470875s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 271.10416155373434 -26.15944858603459 Q 84.24531029082671 106.9961377084332 0 0" 
+          dur="9.567827051954657s" 
+          begin="-1.3153395870722173s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.998900218400498s" begin="-4.445268688470875s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.998900218400498s" begin="-4.445268688470875s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.998900218400498s" begin="-4.445268688470875s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="9.567827051954657s" begin="-1.3153395870722173s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8771755510995094" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 180.13820586151323 -350.0830327913808 L 0 0" 
-          dur="3.3466392768646815s" 
-          begin="-7.929090633525961s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 158.92252650404473 263.1624270239282 Q -67.78866955386755 137.95798051220103 0 0" 
+          dur="8.092976419218301s" 
+          begin="-7.93709962222517s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.3466392768646815s" begin="-7.929090633525961s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.3466392768646815s" begin="-7.929090633525961s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.3466392768646815s" begin="-7.929090633525961s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.092976419218301s" begin="-7.93709962222517s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8273291149538702" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 259.9533606119663 -302.1006776606247 L 0 0" 
-          dur="2.6455762690258178s" 
-          begin="-7.456981501683906s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -34.930291660513824 124.96391458423057 Q -62.0132126997323 19.062732138484712 0 0" 
+          dur="6.0115148403703405s" 
+          begin="-9.32613307526754s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.6455762690258178s" begin="-7.456981501683906s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.6455762690258178s" begin="-7.456981501683906s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.6455762690258178s" begin="-7.456981501683906s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.0115148403703405s" begin="-9.32613307526754s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9583446015774575" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 214.49663299395124 318.3293331750455 L 0 0" 
-          dur="2.2741753550736328s" 
-          begin="-4.702202697844076s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 132.68617725062776 -12.170183944959627 Q 40.96575209740065 52.53799489658988 0 0" 
+          dur="5.654769699062056s" 
+          begin="-3.6449276353021043s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.2741753550736328s" begin="-4.702202697844076s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.2741753550736328s" begin="-4.702202697844076s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.2741753550736328s" begin="-4.702202697844076s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="5.654769699062056s" begin="-3.6449276353021043s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.5816911217963723" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 146.23317269288899 221.47296801791146 L 0 0" 
-          dur="4.663504933149321s" 
-          begin="-5.768124029638186s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -55.68848405886499 188.88275478673884 Q -94.51398701546573 27.596772213264718 0 0" 
+          dur="6.657077268908438s" 
+          begin="-9.106746773968556s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.663504933149321s" begin="-5.768124029638186s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.663504933149321s" begin="-5.768124029638186s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.663504933149321s" begin="-5.768124029638186s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.657077268908438s" begin="-9.106746773968556s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9308357829337852" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -161.32492886026904 -132.70035051981495 L 0 0" 
-          dur="3.000148090808165s" 
-          begin="-2.9214180490877095s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -103.09797850746232 -294.96580591630567 Q 96.2505458355614 -123.0623312976059 0 0" 
+          dur="7.942653073789216s" 
+          begin="-3.2456077027031527s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.000148090808165s" begin="-2.9214180490877095s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.000148090808165s" begin="-2.9214180490877095s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.000148090808165s" begin="-2.9214180490877095s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.942653073789216s" begin="-3.2456077027031527s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.4651243408693704" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -345.1376923593075 -163.34444961461602 L 0 0" 
-          dur="3.971954997427165s" 
-          begin="-4.633747591155366s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 16.102678556864294 210.5267475658497 Q -84.22591762385589 63.64901197001897 0 0" 
+          dur="6.321067392480133s" 
+          begin="-8.149685745577138s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.971954997427165s" begin="-4.633747591155366s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.971954997427165s" begin="-4.633747591155366s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.971954997427165s" begin="-4.633747591155366s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="6.321067392480133s" begin="-8.149685745577138s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.441833652986516" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 270.98002693381574 55.687087749250715 L 0 0" 
-          dur="2.3011653850598233s" 
-          begin="-9.187298494373135s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -211.680154203438 -117.06343937304972 Q -7.932893904200714 -120.68617702398416 0 0" 
+          dur="7.323158790771851s" 
+          begin="-5.264228910255381s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.3011653850598233s" begin="-9.187298494373135s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.3011653850598233s" begin="-9.187298494373135s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.3011653850598233s" begin="-9.187298494373135s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.323158790771851s" begin="-5.264228910255381s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.9094397629896032" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 191.44429416047333 272.30927147971744 L 0 0" 
-          dur="2.4474592216423168s" 
-          begin="-8.210643967847432s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -255.22936468349806 2.030185158469934 Q -69.8046780841972 -106.83559556482814 0 0" 
+          dur="5.719818204988714s" 
+          begin="-7.606419813190939s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.4474592216423168s" begin="-8.210643967847432s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.4474592216423168s" begin="-8.210643967847432s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.4474592216423168s" begin="-8.210643967847432s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="5.719818204988714s" begin="-7.606419813190939s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.8854320558897693" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -340.2134668502385 -56.12709473625938 L 0 0" 
-          dur="3.828123441023343s" 
-          begin="-0.6272377943471596s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -93.76055962904567 -222.2756892758198 Q 68.18974829335876 -99.49642895067407 0 0" 
+          dur="7.113283018523388s" 
+          begin="-7.94216106097015s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.828123441023343s" begin="-0.6272377943471596s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.828123441023343s" begin="-0.6272377943471596s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.828123441023343s" begin="-0.6272377943471596s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="7.113283018523388s" begin="-7.94216106097015s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.34049639939615306" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -319.62262642619254 164.42479972024236 L 0 0" 
-          dur="4.939204819226399s" 
-          begin="-1.3516152849104413s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -146.22492002501005 -43.128592369764895 Q -21.35710118506643 -73.17325268156607 0 0" 
+          dur="4.662215281908416s" 
+          begin="-3.3017830746183363s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.939204819226399s" begin="-1.3516152849104413s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.939204819226399s" begin="-1.3516152849104413s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.939204819226399s" begin="-1.3516152849104413s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="4.662215281908416s" begin="-3.3017830746183363s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.5870299637360225" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 72.90751942865319 316.20870891908027 L 0 0" 
-          dur="2.291987309396829s" 
-          begin="-3.0878565122037727s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 255.9739113397667 -195.00359923832846 Q 151.19658261556165 55.01686246957359 0 0" 
+          dur="4.7652167692708s" 
+          begin="-0.8439163067275945s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.291987309396829s" begin="-3.0878565122037727s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.291987309396829s" begin="-3.0878565122037727s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.291987309396829s" begin="-3.0878565122037727s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="4.7652167692708s" begin="-0.8439163067275945s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.32939137626123466" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 120.14669082463178 366.5189015493283 L 0 0" 
-          dur="4.826929278094941s" 
-          begin="-3.071059370710403s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -31.408018098688594 -236.2023643338638 Q 90.89380576425012 -77.0248090107304 0 0" 
+          dur="9.03819670126401s" 
+          begin="-6.012757301732414s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.826929278094941s" begin="-3.071059370710403s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.826929278094941s" begin="-3.071059370710403s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.826929278094941s" begin="-3.071059370710403s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="9.03819670126401s" begin="-6.012757301732414s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.524217053928222" fill="white" opacity="0.6">
         <animateMotion 
-          path="M -165.97815771583575 176.18844154875046 L 0 0" 
-          dur="2.9072819293500407s" 
-          begin="-1.7081872514598362s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M 125.81831101760827 203.29563045669974 Q -51.54372540214644 107.85677799376255 0 0" 
+          dur="8.2001116354467s" 
+          begin="-0.06646017180748753s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.9072819293500407s" begin="-1.7081872514598362s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.9072819293500407s" begin="-1.7081872514598362s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.9072819293500407s" begin="-1.7081872514598362s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="8.2001116354467s" begin="-0.06646017180748753s" repeatCount="indefinite" />
+      </circle>
     
-      <ellipse fill="white" opacity="0">
+      <circle r="0.44342900973592736" fill="white" opacity="0.6">
         <animateMotion 
-          path="M 78.14255801039097 -276.46133241020294 L 0 0" 
-          dur="3.185759099663448s" 
-          begin="-0.3977847133810841s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          path="M -87.79458952732254 83.65351358800197 Q -58.91381181294799 -14.339206712395956 0 0" 
+          dur="5.775061627155686s" 
+          begin="-7.202543906083183s" 
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.185759099663448s" begin="-0.3977847133810841s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.185759099663448s" begin="-0.3977847133810841s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.185759099663448s" begin="-0.3977847133810841s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M -323.3468718445998 -92.46085646441495 L 0 0" 
-          dur="4.031873654940161s" 
-          begin="-6.531014014830108s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.031873654940161s" begin="-6.531014014830108s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.031873654940161s" begin="-6.531014014830108s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.031873654940161s" begin="-6.531014014830108s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M 383.7644347951517 103.08039713071321 L 0 0" 
-          dur="2.6590240497714612s" 
-          begin="-6.698636337562194s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.6590240497714612s" begin="-6.698636337562194s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.6590240497714612s" begin="-6.698636337562194s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.6590240497714612s" begin="-6.698636337562194s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M 263.1587224698675 -161.53765553368123 L 0 0" 
-          dur="3.4040159285689002s" 
-          begin="-8.143396584962197s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.4040159285689002s" begin="-8.143396584962197s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.4040159285689002s" begin="-8.143396584962197s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.4040159285689002s" begin="-8.143396584962197s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M 58.36490004169535 207.1649872594369 L 0 0" 
-          dur="2.453330160752978s" 
-          begin="-6.845548874401873s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.453330160752978s" begin="-6.845548874401873s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.453330160752978s" begin="-6.845548874401873s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.453330160752978s" begin="-6.845548874401873s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M -25.209737654472804 -251.18648810175392 L 0 0" 
-          dur="4.193414425331544s" 
-          begin="-5.74089338534455s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.193414425331544s" begin="-5.74089338534455s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.193414425331544s" begin="-5.74089338534455s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.193414425331544s" begin="-5.74089338534455s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M -82.65685019286367 296.39492375525947 L 0 0" 
-          dur="2.1191407864253766s" 
-          begin="-1.7575534388019465s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.1191407864253766s" begin="-1.7575534388019465s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.1191407864253766s" begin="-1.7575534388019465s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.1191407864253766s" begin="-1.7575534388019465s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M -308.31350765304836 248.96950071207837 L 0 0" 
-          dur="4.465579259721698s" 
-          begin="-3.8711420179554024s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="4.465579259721698s" begin="-3.8711420179554024s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="4.465579259721698s" begin="-3.8711420179554024s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="4.465579259721698s" begin="-3.8711420179554024s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M 58.3453751926719 -203.38167424072074 L 0 0" 
-          dur="3.477269077295959s" 
-          begin="-2.2859767562122246s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="3.477269077295959s" begin="-2.2859767562122246s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="3.477269077295959s" begin="-2.2859767562122246s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="3.477269077295959s" begin="-2.2859767562122246s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M 219.36574872991147 -67.5347133687429 L 0 0" 
-          dur="2.546541919099175s" 
-          begin="-4.8802953564112865s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.546541919099175s" begin="-4.8802953564112865s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.546541919099175s" begin="-4.8802953564112865s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.546541919099175s" begin="-4.8802953564112865s" repeatCount="indefinite" />
-      </ellipse>
-    
-      <ellipse fill="white" opacity="0">
-        <animateMotion 
-          path="M 67.87633096488983 285.2002398739344 L 0 0" 
-          dur="2.002878637543859s" 
-          begin="-9.824504316778356s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
-          calcMode="spline"
-          keySplines="0.42 0 1 1"
-        />
-        <animate attributeName="rx" values="1;1;4;0" dur="2.002878637543859s" begin="-9.824504316778356s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="2.002878637543859s" begin="-9.824504316778356s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="2.002878637543859s" begin="-9.824504316778356s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="5.775061627155686s" begin="-7.202543906083183s" repeatCount="indefinite" />
+      </circle>
     
     </g>
 
-    <g transform="translate(400, 225)">
+    <g transform="translate(425, 225)" filter="url(#intenseBloom)">
       
-      <path d="M -220 0 C -220 -150 220 -150 220 0 L 200 0 C 200 -120 -200 -120 -200 0 Z" 
-            fill="#663399" filter="url(#plasmaNoise)" opacity="0.6">
-        <animate attributeName="opacity" values="0.4;0.7;0.4" dur="8s" repeatCount="indefinite" />
+      <path d="M -240 0 C -220 -160 220 -160 240 0 L 220 0 C 200 -130 -200 -130 -220 0 Z" 
+            fill="url(#lensingGrad)" opacity="0.6">
+        <animate attributeName="opacity" values="0.5;0.7;0.5" dur="6s" repeatCount="indefinite" />
       </path>
 
-      <g filter="url(#bloom)">
-        <ellipse rx="250" ry="12" fill="none" stroke="#663399" stroke-width="25" opacity="0.8" filter="url(#plasmaNoise)" />
-        <ellipse rx="240" ry="8" fill="none" stroke="white" stroke-width="2" opacity="0.5" />
-      </g>
+      <ellipse rx="260" ry="18" fill="none" stroke="url(#dopplerGrad)" stroke-width="28" mask="url(#holeMask)">
+         <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="20s" repeatCount="indefinite" />
+      </ellipse>
+      
+      <ellipse rx="100" ry="85" fill="none" stroke="white" stroke-width="1.5" opacity="0.4" filter="url(#softGlow)">
+         <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.15s" repeatCount="indefinite" />
+      </ellipse>
 
-      <circle r="82" fill="none" stroke="white" stroke-width="0.5" opacity="0.9">
-        <animate attributeName="r" values="81.5;82.5;81.5" dur="0.1s" repeatCount="indefinite" />
-      </circle>
-
-      <circle r="80" fill="url(#singularityGrad)" />
-      <circle r="78" fill="black" />
-
-      <circle r="120" fill="#663399" opacity="0.05" filter="url(#bloom)" />
     </g>
+
+    <circle cx="425" cy="225" r="79" fill="black" />
+    
+    <circle cx="425" cy="225" r="80" fill="none" stroke="white" stroke-width="1" opacity="0.8" filter="url(#softGlow)" />
+
   </svg>
