@@ -16,24 +16,21 @@ jobs:
           committer_branch: metrics
           committer_message: "chore: update metrics [skip ci]"
 
-          # --- CONFIGURAÇÕES DE FOCO ---
+          # --- CONFIGURAÇÃO MINIMALISTA ---
           user: Harlei-Melo
           template: classic
-          base: "" # Mantém o fundo limpo sem header/footer
-          config_timezone: America/Sao_Paulo
+          base: "" # Remove TUDO (foto, repositórios, etc) para focar no gráfico
           config_display: large
 
-          # --- TEMA E CORES ---
-          theme: night # Fundo escuro profundo
-          # Aqui definimos as cores dos blocos do gráfico 3D (do menos ativo ao mais ativo)
-          # Usei um gradiente de Roxo para Rosa/Neon para combinar com a estética "Design Engineer"
-          config_colors: gradient(#161b22, #4c1d95, #7c3aed, #db2777, #f472b6)
+          # --- RAINBOW GRADIENT (Cores Reais) ---
+          # A primeira cor (#161b22) é o fundo do GitHub Dark para dias vazios.
+          # As seguintes formam o arco-íris completo.
+          config_colors: gradient(#161b22, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)
 
-          # --- O GRÁFICO 3D (Isocalendar) ---
+          # --- GRÁFICO 3D (O Coração do Design) ---
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
 
-          # --- STREAK (Apenas a máxima e atual) ---
+          # --- STREAK (Sequência Máxima) ---
           plugin_streat: yes
           plugin_streat_sections: timeline
-          # Isso vai mostrar a sua "sequência" de contribuições de forma elegante
