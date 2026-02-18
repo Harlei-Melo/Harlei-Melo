@@ -1,14 +1,13 @@
 // scripts/renderer.js
 
 // 1. Gerador de Partículas de Matéria (Poeira Cósmica)
-// Menores, mais rápidas e com rastros (trails) para realismo
 const generateDust = (count, width, height) => {
   let dust = "";
-  const cx = width / 2;
-  const cy = height / 2;
+  // Pequeno ajuste para garantir que as partículas girem em torno do centro correto
+  const cx = 0;
+  const cy = 0;
 
   for (let i = 0; i < count; i++) {
-    // Distribuição não-uniforme (mais densa perto do centro)
     const angle = Math.random() * Math.PI * 2;
     const dist = 120 + Math.random() * 250;
     const r = Math.random() * 0.8 + 0.2;
@@ -38,9 +37,7 @@ export const renderBlackHole = (username, color) => {
   const cx = width / 2;
   const cy = height / 2;
 
-  // Cor base ajustada para luminosidade
   const mainColor = color || "#ff6600";
-  // Lado "Blue Shift" (Aproximação - Mais quente/branco)
   const dopplerBright = "#ffffff";
 
   return `
@@ -75,7 +72,7 @@ export const renderBlackHole = (username, color) => {
       
       <mask id="holeMask">
         <rect x="0" y="0" width="${width}" height="${height}" fill="white" />
-        <circle cx="${cx}"Kf cy="${cy}" r="78" fill="black" />
+        <circle cx="${cx}" cy="${cy}" r="78" fill="black" />
       </mask>
     </defs>
 
