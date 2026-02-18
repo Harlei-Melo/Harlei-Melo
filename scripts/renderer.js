@@ -1,96 +1,109 @@
 // scripts/renderer.js
 
-// 1. Simulação de Fluxo de Matéria (Spaghettification)
-// Partículas que se alongam e aceleram em direção ao centro
-const generateSpaghettiStars = (count, cx, cy) => {
-  let stars = "";
+// 1. Gerador de Partículas de Matéria (Poeira Cósmica)
+// Menores, mais rápidas e com rastros (trails) para realismo
+const generateDust = (count, width, height) => {
+  let dust = "";
+  const cx = width / 2;
+  const cy = height / 2;
+
   for (let i = 0; i < count; i++) {
+    // Distribuição não-uniforme (mais densa perto do centro)
     const angle = Math.random() * Math.PI * 2;
-    const startDist = 200 + Math.random() * 200;
-    const duration = 2 + Math.random() * 3;
+    const dist = 120 + Math.random() * 250;
+    const r = Math.random() * 0.8 + 0.2;
+    const dur = 4 + Math.random() * 6;
     const delay = -(Math.random() * 10);
 
-    stars += `
-      <ellipse fill="white" opacity="0">
+    dust += `
+      <circle r="${r}" fill="white" opacity="0.6">
         <animateMotion 
-          path="M ${Math.cos(angle) * startDist} ${Math.sin(angle) * startDist} L 0 0" 
-          dur="${duration}s" 
+          path="M ${Math.cos(angle) * dist} ${Math.sin(angle) * dist} Q ${Math.cos(angle + 1) * dist * 0.5} ${Math.sin(angle + 1) * dist * 0.5} 0 0" 
+          dur="${dur}s" 
           begin="${delay}s" 
-          repeatCount="indefinite" 
-          keyPoints="0;1" 
-          keyTimes="0;1"
+          repeatCount="indefinite"
           calcMode="spline"
-          keySplines="0.42 0 1 1"
+          keySplines="0.4 0 1 1"
         />
-        <animate attributeName="rx" values="1;1;4;0" dur="${duration}s" begin="${delay}s" repeatCount="indefinite" />
-        <animate attributeName="ry" values="1;1;0.5;0" dur="${duration}s" begin="${delay}s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0;0.8;0" dur="${duration}s" begin="${delay}s" repeatCount="indefinite" />
-      </ellipse>
+        <animate attributeName="opacity" values="0;0.8;0" dur="${dur}s" begin="${delay}s" repeatCount="indefinite" />
+      </circle>
     `;
   }
-  return stars;
+  return dust;
 };
 
 export const renderBlackHole = (username, color) => {
-  const width = 800;
+  const width = 850;
   const height = 450;
   const cx = width / 2;
   const cy = height / 2;
-  const accent = color || "#ff4d00";
+
+  // Cor base ajustada para luminosidade
+  const mainColor = color || "#ff6600";
+  // Lado "Blue Shift" (Aproximação - Mais quente/branco)
+  const dopplerBright = "#ffffff";
 
   return `
-  <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" style="background: #000;">
+  <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" style="background: #030303;">
     <defs>
-      <filter id="plasmaNoise" x="-50%" y="-50%" width="200%" height="200%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="4" seed="1">
-          <animate attributeName="seed" from="1" to="100" dur="60s" repeatCount="indefinite" />
-        </feTurbulence>
-        <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
-        <feDisplacementMap in="SourceGraphic" scale="20" />
+      <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
       </filter>
 
-      <filter id="bloom" x="-100%" y="-100%" width="300%" height="300%">
-        <feGaussianBlur stdDeviation="15" result="blur1" />
-        <feGaussianBlur stdDeviation="5" result="blur2" />
+      <filter id="intenseBloom" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="12" result="blur1" />
+        <feGaussianBlur stdDeviation="25" result="blur2" />
         <feMerge>
-          <feMergeNode in="blur1" />
           <feMergeNode in="blur2" />
+          <feMergeNode in="blur1" />
           <feMergeNode in="SourceGraphic" />
         </feMerge>
       </filter>
 
-      <radialGradient id="singularityGrad">
-        <stop offset="92%" stop-color="#000" />
-        <stop offset="95%" stop-color="${accent}" stop-opacity="0.3" />
-        <stop offset="100%" stop-color="#000" />
-      </radialGradient>
+      <linearGradient id="dopplerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="${dopplerBright}" stop-opacity="0.9" />
+        <stop offset="30%" stop-color="${mainColor}" stop-opacity="0.8" />
+        <stop offset="70%" stop-color="${mainColor}" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="#000000" stop-opacity="0.1" />
+      </linearGradient>
+
+      <linearGradient id="lensingGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+        <stop offset="0%" stop-color="${mainColor}" stop-opacity="0.8" />
+        <stop offset="100%" stop-color="${mainColor}" stop-opacity="0.0" />
+      </linearGradient>
+      
+      <mask id="holeMask">
+        <rect x="0" y="0" width="${width}" height="${height}" fill="white" />
+        <circle cx="${cx}"Kf cy="${cy}" r="78" fill="black" />
+      </mask>
     </defs>
 
     <g transform="translate(${cx}, ${cy})">
-      ${generateSpaghettiStars(60, cx, cy)}
+       ${generateDust(50, width, height)}
     </g>
 
-    <g transform="translate(${cx}, ${cy})">
+    <g transform="translate(${cx}, ${cy})" filter="url(#intenseBloom)">
       
-      <path d="M -220 0 C -220 -150 220 -150 220 0 L 200 0 C 200 -120 -200 -120 -200 0 Z" 
-            fill="${accent}" filter="url(#plasmaNoise)" opacity="0.6">
-        <animate attributeName="opacity" values="0.4;0.7;0.4" dur="8s" repeatCount="indefinite" />
+      <path d="M -240 0 C -220 -160 220 -160 240 0 L 220 0 C 200 -130 -200 -130 -220 0 Z" 
+            fill="url(#lensingGrad)" opacity="0.6">
+        <animate attributeName="opacity" values="0.5;0.7;0.5" dur="6s" repeatCount="indefinite" />
       </path>
 
-      <g filter="url(#bloom)">
-        <ellipse rx="250" ry="12" fill="none" stroke="${accent}" stroke-width="25" opacity="0.8" filter="url(#plasmaNoise)" />
-        <ellipse rx="240" ry="8" fill="none" stroke="white" stroke-width="2" opacity="0.5" />
-      </g>
+      <ellipse rx="260" ry="18" fill="none" stroke="url(#dopplerGrad)" stroke-width="28" mask="url(#holeMask)">
+         <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="20s" repeatCount="indefinite" />
+      </ellipse>
+      
+      <ellipse rx="100" ry="85" fill="none" stroke="white" stroke-width="1.5" opacity="0.4" filter="url(#softGlow)">
+         <animate attributeName="opacity" values="0.3;0.6;0.3" dur="0.15s" repeatCount="indefinite" />
+      </ellipse>
 
-      <circle r="82" fill="none" stroke="white" stroke-width="0.5" opacity="0.9">
-        <animate attributeName="r" values="81.5;82.5;81.5" dur="0.1s" repeatCount="indefinite" />
-      </circle>
-
-      <circle r="80" fill="url(#singularityGrad)" />
-      <circle r="78" fill="black" />
-
-      <circle r="120" fill="${accent}" opacity="0.05" filter="url(#bloom)" />
     </g>
+
+    <circle cx="${cx}" cy="${cy}" r="79" fill="black" />
+    
+    <circle cx="${cx}" cy="${cy}" r="80" fill="none" stroke="white" stroke-width="1" opacity="0.8" filter="url(#softGlow)" />
+
   </svg>
   `;
 };
