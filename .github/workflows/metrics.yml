@@ -1,10 +1,10 @@
 name: Metrics
 on:
-  # Roda a cada 24 horas
+  # 1. Roda automaticamente todo dia à meia-noite
   schedule: [{ cron: "0 0 * * *" }]
-  # Permite rodar manualmente
+  # 2. Permite rodar manualmente na aba Actions
   workflow_dispatch:
-  # Roda a cada push na main (opcional)
+  # 3. Roda a cada push na main
   push: { branches: ["main"] }
 
 jobs:
@@ -15,38 +15,46 @@ jobs:
     steps:
       - uses: lowlighter/metrics@latest
         with:
-          # Seu token (padrão do github actions)
           token: ${{ secrets.GITHUB_TOKEN }}
 
-          # Opções Gerais
+          # --- ONDE SALVAR ---
+          committer_branch: metrics
+          committer_message: "chore: update metrics [skip ci]"
+
+          # --- CONFIGURAÇÕES GERAIS ---
           user: Harlei-Melo
           template: classic
           base: header, activity, community, repositories, metadata
           config_timezone: America/Sao_Paulo
 
-          # TEMA "NIGHT" (Combina com o Buraco Negro)
+          # --- AQUI ESTAVA O ERRO (Theme e Display) ---
+          # Na versão atual, eles funcionam assim:
           config_display: large
           config_padding: 0, 10%
-          theme: night
 
-          # 1. CALENDÁRIO ISOMÉTRICO (A "Cidade 3D")
+          # Para garantir o tema escuro/neon, usamos css override se o theme direto falhar,
+          # mas 'night' geralmente é aceito se estiver dentro de 'plugin_...' ou como input direto se suportado.
+          # Vamos tentar sem o input 'theme' solto que deu erro, e usar a query string interna se necessário.
+          # Mas o erro diz que 'theme' NÃO é um input válido. O correto pode ser usar parametros de plugin.
+
+          # VAMOS USAR O METÓDO GARANTIDO: Query Params via 'extras_css' ou config direta
+          # Na verdade, o template 'classic' não usa input 'theme'.
+          # O tema é definido pelo plugin ou css.
+          # Vamos remover 'theme: night' que causou o warn e usar cores manuais ou css.
+
+          # --- PLUGINS ---
+
+          # 1. CALENDÁRIO ISOMÉTRICO 3D
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
 
-          # 2. GRÁFICO DE LINGUAGENS (Visual e limpo)
+          # 2. LINGUAGENS (Radar / Gráfico)
           plugin_languages: yes
-          plugin_languages_analysis_timeout: 15
-          plugin_languages_categories: markup, programming
-          plugin_languages_colors: github
-          plugin_languages_limit: 8
-          plugin_languages_recent_categories: markup, programming
-          plugin_languages_recent_days: 14
-          plugin_languages_recent_load: 300
           plugin_languages_sections: most-used
-          plugin_languages_threshold: 0%
+          plugin_languages_indepth: yes
+          plugin_languages_limit: 8
 
-          # 3. ACHIEVEMENTS (Medalhas 3D bonitas)
+          # 3. ACHIEVEMENTS (Conquistas 3D)
           plugin_achievements: yes
           plugin_achievements_display: compact
-          plugin_achievements_secrets: yes
-          plugin_achievements_threshold: C
+          plugin_achievements_threshold: B
