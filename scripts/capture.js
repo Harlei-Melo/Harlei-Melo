@@ -14,28 +14,45 @@ async function fetchGithubData() {
   try {
     const response = await fetch("https://api.github.com/graphql", {
       method: "POST",
-      headers: { Authorization: `bearer ${TOKEN}`, "Content-Type": "application/json" },
+      headers: {
+        Authorization: `bearer ${TOKEN}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ query, variables: { login: USERNAME } }),
     });
     const json = await response.json();
     if (json.errors) return { contributions: 0, color: "#ffaa00" };
-    const total = json.data.user.contributionsCollection.contributionCalendar.totalContributions;
+    const total =
+      json.data.user.contributionsCollection.contributionCalendar
+        .totalContributions;
     const repos = json.data.user.repositories.nodes;
     const langStats = {};
     repos.forEach((r) => {
-      if (r.languages.edges[0]) langStats[r.languages.edges[0].node.name] = (langStats[r.languages.edges[0].node.name] || 0) + 1;
+      if (r.languages.edges[0])
+        langStats[r.languages.edges[0].node.name] =
+          (langStats[r.languages.edges[0].node.name] || 0) + 1;
     });
-    const topLang = Object.keys(langStats).reduce((a, b) => (langStats[a] > langStats[b] ? a : b), "Unknown");
-    const color = repos.find((r) => r.languages.edges[0]?.node.name === topLang)?.languages.edges[0].node.color || "#ffaa00";
+    const topLang = Object.keys(langStats).reduce(
+      (a, b) => (langStats[a] > langStats[b] ? a : b),
+      "Unknown",
+    );
+    const color =
+      repos.find((r) => r.languages.edges[0]?.node.name === topLang)?.languages
+        .edges[0].node.color || "#ffaa00";
     return { contributions: total, color: color };
-  } catch (e) { return { contributions: 500, color: "#ffaa00" }; }
+  } catch (e) {
+    return { contributions: 500, color: "#ffaa00" };
+  }
 }
 
 (async () => {
   const data = await fetchGithubData();
-  const activity = Math.min(Math.max(data.contributions / 200, 1.0), 10).toFixed(2);
+  const activity = Math.min(
+    Math.max(data.contributions / 200, 1.0),
+    10,
+  ).toFixed(2);
   const color = data.color.replace("#", "");
-  console.log(`🎬 Iniciando GIF para ${USERNAME} (Modo: Force WebGL)`);
+  console.log(`🎬 Iniciando GIF para ${USERNAME} (Modo: ANGLE+SwiftShader)`);
 
   const browser = await puppeteer.launch({
     headless: "new",
@@ -43,30 +60,28 @@ async function fetchGithubData() {
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
-      // --- O COMBO DE DESBLOQUEIO ---
-      "--ignore-gpu-blocklist",      // Ignora lista negra de hardware
-      "--enable-webgl",              // Força ativação do WebGL
-      "--use-gl=swiftshader",        // Usa renderizador de CPU
-      "--no-first-run",
-      "--disable-gpu-sandbox",       // Remove isolamento da GPU
-      "--disable-software-rasterizer", // Força o uso do GL
+      // --- A NOVA ESTRATÉGIA ---
+      "--use-gl=angle", // Usa a camada de compatibilidade ANGLE
+      "--use-angle=swiftshader", // Força o ANGLE a usar CPU (SwiftShader)
+      "--enable-webgl",
+      "--ignore-gpu-blocklist",
       "--disable-web-security",
       "--mute-audio",
     ],
   });
 
   const page = await browser.newPage();
-  
+
   // Logs para debug
-  page.on('console', msg => console.log('PAGE LOG:', msg.text()));
-  page.on('pageerror', err => console.log('PAGE ERROR:', err.toString()));
+  page.on("console", (msg) => console.log("PAGE LOG:", msg.text()));
+  page.on("pageerror", (err) => console.log("PAGE ERROR:", err.toString()));
 
   await page.setViewport({ width: 800, height: 400, deviceScaleFactor: 1 });
 
   try {
     const url = `http://127.0.0.1:5173/?color=${color}&activity=${activity}`;
     console.log(`Navegando para: ${url}`);
-    
+
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
 
     console.log("⏳ Aguardando renderização (6s)...");
@@ -74,12 +89,23 @@ async function fetchGithubData() {
 
     // Verificação se o WebGL carregou
     const canvasCheck = await page.evaluate(() => {
-      const canvas = document.querySelector('canvas');
-      if (!canvas) return 'NO CANVAS';
-      const gl = canvas.getContext('webgl');
-      return gl ? 'WEBGL OK' : 'WEBGL FALHOU';
+      const canvas = document.querySelector("canvas");
+      if (!canvas) return "NO CANVAS";
+      const gl = canvas.getContext("webgl");
+      if (gl) {
+        const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+        const renderer = debugInfo
+          ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+          : "Desconhecido";
+        return `WEBGL OK (${renderer})`;
+      }
+      return "WEBGL FALHOU";
     });
     console.log(`STATUS GRÁFICO: ${canvasCheck}`);
+
+    if (canvasCheck.includes("FALHOU")) {
+      throw new Error("WebGL não foi ativado pelo navegador.");
+    }
 
     const encoder = new GifEncoder(800, 400);
     const file = fs.createWriteStream("github-profile.gif");

@@ -1,36 +1,60 @@
 name: Update Galaxy Profile
+
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: "0 0 * * *" # Roda todo dia à meia-noite
+  workflow_dispatch: # Botão manual para testar
 
 jobs:
   build-and-capture:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npm ci
-      - name: Start Server & Capture
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar GIF do Buraco Negro
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
         run: |
-          npm run dev -- --host 127.0.0.1 &
+          # 1. MATADOR DE ZUMBIS: Força o fechamento de qualquer coisa na porta 5173
+          sudo fuser -k 5173/tcp || true
+
+          # 2. Inicia o servidor garantindo a porta 5173 e IP local
+          npm run dev -- --host 127.0.0.1 --port 5173 --strictPort &
+
+          # 3. Espera o servidor estar 100% pronto
           npx wait-on http://127.0.0.1:5173
-          node scripts/capture.js
-      - name: Rodar Vite e Capturar Imagem
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
-        run: |
-          npm run dev -- --host 127.0.0.1 &
-          npx wait-on http://127.0.0.1:5173
-          
-          # --- LINHA NOVA: Apaga o GIF velho para garantir um novo ---
+
+          # 4. Remove GIF antigo para garantir que o novo será gerado
           rm -f github-profile.gif
-          # -----------------------------------------------------------
-          
+
+          # 5. Roda o script de captura
           node scripts/capture.js
+
+      - name: Commitar e Pushar
+        run: |
+          git config user.name "Galaxy Bot"
+          git config user.email "actions@github.com"
+
+          # Adiciona o arquivo gerado
+          git add github-profile.gif
+
+          # Tenta commitar (se não tiver mudança, não falha graças ao "|| exit 0")
+          git commit -m "update: galaxy animation [skip ci]" || exit 0
+
+          # --- CORREÇÃO DE CONFLITO ---
+          # Puxa atualizações do GitHub antes de enviar para evitar erro de rejeição
+          git pull --rebase origin main
+          # ----------------------------
+
+          git push
