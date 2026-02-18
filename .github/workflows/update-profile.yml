@@ -21,21 +21,16 @@ jobs:
           npm run dev -- --host 127.0.0.1 &
           npx wait-on http://127.0.0.1:5173
           node scripts/capture.js
-      - name: Commitar e Pushar nova imagem
+      - name: Rodar Vite e Capturar Imagem
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
         run: |
-          git config user.name "Galaxy Bot"
-          git config user.email "actions@github.com"
-
-          # Adiciona o GIF
-          git add github-profile.gif
-
-          # Salva a alteração localmente no robô
-          git commit -m "update: galaxy animation [skip ci]" || exit 0
-
-          # --- A CORREÇÃO MÁGICA ---
-          # Puxa as mudanças mais recentes do GitHub e aplica o commit do robô por cima
-          git pull --rebase origin main
-          # -------------------------
-
-          # Agora sim, envia
-          git push
+          npm run dev -- --host 127.0.0.1 &
+          npx wait-on http://127.0.0.1:5173
+          
+          # --- LINHA NOVA: Apaga o GIF velho para garantir um novo ---
+          rm -f github-profile.gif
+          # -----------------------------------------------------------
+          
+          node scripts/capture.js
