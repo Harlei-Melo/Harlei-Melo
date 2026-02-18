@@ -31,27 +31,27 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      # --- AQUI ESTÁ A MUDANÇA MÁGICA ---
       - name: Build Application
         run: npm run build
-        # Compila o site antes de rodar. Zero delay.
 
-      - name: Start Production Server
+      - name: Start Static Server
+        # Usa npx http-server direto (mais estável para CI)
+        # -p 5173: Porta
+        # -a 127.0.0.1: Bind apenas no localhost
+        # dist: Pasta para servir
         run: |
-          npm run preview > server.log 2>&1 &
+          npx http-server dist -p 5173 -a 127.0.0.1 --cors -c-1 > server.log 2>&1 &
           echo "Server PID: $!"
 
       - name: Wait for Server
-        # Espera o servidor responder na porta 5173
         run: npx wait-on http://127.0.0.1:5173 -t 60000
-
-      - name: Debug Logs (Caso Falhe)
-        if: failure()
-        run: cat server.log
-      # ----------------------------------
 
       - name: Capture Animation
         run: npm run capture
+
+      - name: Debug Server Logs (Always run if failed)
+        if: failure()
+        run: cat server.log
 
       - name: Commit & Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
